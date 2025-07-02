@@ -66,7 +66,6 @@ alturas <- c(1.4, 1.7, 2.0, 1.6, 1.8)
 media(alturas)
 
 # Medidas estatisticas
-
 sum(alturas) # Coma dos elementos do objeto "alturas"
 length(alturas) # Contagem de elementos
 mean(alturas) # Média
@@ -81,6 +80,8 @@ install.packages("geobr")
 install.packages("sf")
 install.packages("tidyverse")
 install.packages("remotes")
+
+# https://rfsaldanha.github.io/microdatasus/
 remotes::install_github("rfsaldanha/microdatasus")
 
 library(geobr)
@@ -93,8 +94,8 @@ mun <- read_municipality(code_muni = 33, year = 2020)
 mun$MUNIC_RES <- str_sub(mun$code_muni, end = -2)
 
 
-# Download dados tabulares
-# de sistemas de informação de saúde
+# Download de dados tabulares
+# de Sistemas de Informação de Saúde
 
 df <- fetch_datasus(
   year_start = 2021,
@@ -117,8 +118,8 @@ df_c <- df_a %>%
 # Cálculo de um indicador
 df_d <- df_c %>%
   group_by(MUNIC_RES, MARCA_UTI) %>%
-  summarise(n = n()) %>%
-  mutate(MARCA_UTI, percent = (n / sum(n) * 100))
+  summarise(freq = n()) %>%
+  mutate(MARCA_UTI, percent = (freq / sum(freq) * 100))
 
 
 # Juntar (join) dados graficos e dados tabulares
