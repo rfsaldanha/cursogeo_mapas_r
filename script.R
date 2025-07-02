@@ -158,10 +158,14 @@ ggplot() +
   labs(subtitle = "Utilização de UTI, 2020", size = 8) +
   scale_fill_viridis_c(direction = -1, name = "%", limits = c(0, 100))
 
-
+# Exportar banco
 write.table(
   df_d,
   "banco.csv",
   sep = ";",
   row.names = T
 )
+
+# Exportar dado geográfico
+write_sf(mapa, "mapa.geojson")
+write_sf(mapa, "mapa.shp")
